@@ -116,7 +116,7 @@ class AudioLoader:
         if num_channels == 1:
             signal = signal.to_mono()
         signal = signal.resample(sample_rate)
-
+        length = signal.duration*sample_rate
         if signal.duration < duration:
             signal = signal.zero_pad_to(int(duration * sample_rate))
 
@@ -124,6 +124,7 @@ class AudioLoader:
             signal.metadata[k] = v
 
         item = {
+            "length": length,
             "signal": signal,
             "source_idx": source_idx,
             "item_idx": item_idx,
